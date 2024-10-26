@@ -1,0 +1,37 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QPushButton, QVBoxLayout, QWidget, QTextBrowser
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+
+class PersonalBrowser(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Personal Anonymous Browser")
+        self.setGeometry(100, 100, 1200, 800)
+
+        self.browser = QWebEngineView()
+        self.url_bar = QLineEdit()
+        self.search_button = QPushButton("Search")
+
+        self.search_button.clicked.connect(self.perform_search)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.url_bar)
+        layout.addWidget(self.search_button)
+        layout.addWidget(self.browser)
+
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
+
+    def perform_search(self):
+        query = self.url_bar.text()
+        # Replace 'https://www.example.com/search?q=' with your unindexed search engine URL
+        search_url = f"https://www.example.com/search?q={query}"
+        self.browser.setUrl(search_url)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = PersonalBrowser()
+    window.show()
+    sys.exit(app.exec_())
